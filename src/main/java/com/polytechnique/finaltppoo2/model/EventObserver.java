@@ -1,5 +1,5 @@
 package com.polytechnique.finaltppoo2.model;
 
-public interface ParticipantObserver {
+public interface EventObserver {
     void update(Event.EventState state);
 }

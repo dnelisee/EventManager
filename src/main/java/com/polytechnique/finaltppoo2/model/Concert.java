@@ -15,12 +15,17 @@ public class Concert extends Event{
     }
 
     @Override
-    public void addObserver(ParticipantObserver observer) {
+    public void addObserver(EventObserver observer) {
 
     }
 
     @Override
-    public void removeObserver(ParticipantObserver observer) {
+    public void removeObserver(EventObserver observer) {
+
+    }
+
+    @Override
+    public void notifyObserver() {
 
     }
 }

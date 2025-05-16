@@ -1,6 +1,8 @@
 package com.polytechnique.finaltppoo2.model;
 
 public class Conference extends Event{
+
+    /* attributes given by System class diagram */
     private String theme;
 
     @Override
@@ -14,12 +16,17 @@ public class Conference extends Event{
     }
 
     @Override
-    public void addObserver(ParticipantObserver observer) {
+    public void addObserver(EventObserver observer) {
 
     }
 
     @Override
-    public void removeObserver(ParticipantObserver observer) {
+    public void removeObserver(EventObserver observer) {
+
+    }
+
+    @Override
+    public void notifyObserver() {
 
     }
 }
