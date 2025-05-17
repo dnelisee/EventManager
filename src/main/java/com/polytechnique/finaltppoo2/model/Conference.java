@@ -1,9 +1,34 @@
 package com.polytechnique.finaltppoo2.model;
 
-public class Conference extends Event{
+import java.time.LocalDateTime;
+
+import com.polytechnique.finaltppoo2.model.exceptions.LengthException;
+import com.polytechnique.finaltppoo2.model.exceptions.ValidatableField;
+
+public class Conference extends Event {
 
     /* attributes given by System class diagram */
     private String theme;
+
+    /* default constructor */
+    public Conference(int id, String name, LocalDateTime date, String location, int maxCapacity, String theme) {
+
+        if (!ValidatableField.NAME.validate(name)) {
+            throw new LengthException(ValidatableField.NAME);
+        } else if (!ValidatableField.LOCATION.validate(location)) {
+            throw new LengthException(ValidatableField.LOCATION);
+        } else if (!ValidatableField.THEME.validate(theme)) {
+            throw new LengthException(ValidatableField.THEME);
+        } else {
+            this.id = id;
+            this.name = name;
+            this.date = date;
+            this.location = location;
+            this.maxCapacity = maxCapacity;
+            this.theme = theme;
+        }
+
+    }
 
     @Override
     public void cancel() {
@@ -28,5 +53,12 @@ public class Conference extends Event{
     @Override
     public void notifyObserver() {
 
+    }
+
+    public String getTheme() {
+        return theme;
+    }
+
+    public Conference() {
     }
 }

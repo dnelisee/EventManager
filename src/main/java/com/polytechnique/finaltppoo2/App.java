@@ -29,7 +29,7 @@ public class App extends Application {
 
         // close the database connection after closing the primary stage
         Platform.runLater(()->{
-            primaryStage.setOnCloseRequest(windowEvent -> {
+            primaryStage.setOnCloseRequest(_ -> { // _ is a unnamed variable; useful when we don't reused the variable as in this case
                 try {
                     dbConnection.close();
                 } catch(SQLException ex) {
