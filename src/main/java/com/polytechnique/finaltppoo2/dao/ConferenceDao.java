@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
+import com.polytechnique.finaltppoo2.dao.exceptions.EntityNotFoundException;
+import com.polytechnique.finaltppoo2.dao.exceptions.EntityNotFoundException.EntityName;
 import com.polytechnique.finaltppoo2.model.Conference;
 
 public class ConferenceDao {
@@ -41,14 +43,13 @@ public class ConferenceDao {
         } 
     }
 
-    public Conference getConference(int id) throws SQLException{
+    public Conference getConference(int id) throws EntityNotFoundException {
 
         Conference conf;
 
-        String query = "SELECT * FROM Conference WHERE id = ?";
+        String query = "SELECT name, date, location, maxCapacity, theme FROM Conference WHERE id = ?";
 
-        try {
-            PreparedStatement stmt = conn.prepareStatement(query);
+        try(PreparedStatement stmt = conn.prepareStatement(query)) {
 
             stmt.setInt(1, id);
 
@@ -56,8 +57,7 @@ public class ConferenceDao {
 
             if(!result.next()) {
                 /* the conference with that id is not found */
-                return null; 
-
+                throw new EntityNotFoundException(EntityName.CONFERENCE); 
             } else {
                 String name = result.getString("name");
                 LocalDateTime date = result.getTimestamp("date").toLocalDateTime();
@@ -68,8 +68,8 @@ public class ConferenceDao {
                 conf = new Conference(id, name, date, location, maxCapacity, theme);
                 return conf; 
             }
-        } catch(SQLException e) {
-            throw new RuntimeException(e.getMessage()); 
+        } catch(SQLException _) {
+            throw new EntityNotFoundException(EntityName.CONFERENCE);  
         }
     }
 
