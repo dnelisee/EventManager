@@ -32,27 +32,27 @@ public class Conference extends Event {
 
     @Override
     public void cancel() {
-
+        // .. 
     }
 
     @Override
     public void displayDetails() {
-
+        // .. 
     }
 
     @Override
     public void addObserver(EventObserver observer) {
-
+        // .. 
     }
 
     @Override
     public void removeObserver(EventObserver observer) {
-
+        // .. 
     }
 
     @Override
     public void notifyObserver() {
-
+        // .. 
     }
 
     public String getTheme() {

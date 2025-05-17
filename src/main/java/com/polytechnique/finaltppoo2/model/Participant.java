@@ -9,6 +9,10 @@ public class Participant extends Person implements EventObserver {
 
     @Override
     public void update(Event.EventState state) {
+        // ... 
+    }
 
+    public EventState getState() {
+        return state;
     }
 }

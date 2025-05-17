@@ -8,10 +8,6 @@ public abstract class Event implements ObservableEvent{
         PROGRAMMED, CANCELED
     }
 
-    /* final attributes */
-    protected final int NAME_LENGHT = 25; 
-    protected final int LOCATION_LENGHT = 50;
-
     /* attributes given by System class diagram */
     protected int id;
     protected String name;

@@ -12,31 +12,23 @@ import java.sql.SQLException;
 public class App extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException, SQLException {
-//        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("hello-view.fxml"));
-//        Scene scene = new Scene(fxmlLoader.load(), 320, 240);
-//        stage.setTitle("Hello!");
-//        stage.setScene(scene);
-//        stage.show();
 
         // establish connection with the database
         Connection dbConnection = Database.getConnection();
 
 
 
-        //...
-
-
 
         // close the database connection after closing the primary stage
-        Platform.runLater(()->{
+        Platform.runLater(()->
             primaryStage.setOnCloseRequest(_ -> { // _ is a unnamed variable; useful when we don't reused the variable as in this case
                 try {
                     dbConnection.close();
-                } catch(SQLException ex) {
+                } catch(SQLException _) {
                     throw new RuntimeException("Failing to close the database Connection");
                 }
-            });
-        });
+            })
+        );
 
 
     }
