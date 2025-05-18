@@ -8,6 +8,4 @@ public class LengthException extends RuntimeException {
         );
     }
 
-
-
 }

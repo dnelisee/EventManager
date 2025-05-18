@@ -1,6 +1,7 @@
 package com.polytechnique.finaltppoo2.model;
 
 import java.time.LocalDateTime;
+import com.fasterxml.jackson.annotation.JsonValue;
 
 public abstract class Event implements ObservableEvent{
     /* enumeration due to observer design pattern*/
@@ -9,7 +10,7 @@ public abstract class Event implements ObservableEvent{
     }
 
     /* attributes given by System class diagram */
-    protected int id;
+    protected String id;
     protected String name;
     protected LocalDateTime date;
     protected String location;
@@ -26,9 +27,8 @@ public abstract class Event implements ObservableEvent{
         this.state = EventState.CANCELED;
     }
 
-
     /* getters */
-    public int getId() {
+    public String getId() {
         return id;
     }
 
