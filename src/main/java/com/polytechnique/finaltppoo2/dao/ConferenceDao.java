@@ -25,9 +25,7 @@ public class ConferenceDao {
     public void addConference(Conference conf) throws SQLException{
         String query = "INSERT INTO TABLE Conference(name, date, location, maxCapacity, theme) VALUES(?, ?, ?, ?, ?); "; 
 
-        try {
-            PreparedStatement stmt = conn.prepareStatement(query);
-
+        try (PreparedStatement stmt = conn.prepareStatement(query)){
             stmt.setString(1, conf.getName());
 
             /* here we convert the localDateTime into a timeStamp with will be convert into a mysql DateTime */

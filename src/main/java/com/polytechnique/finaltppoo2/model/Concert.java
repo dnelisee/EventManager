@@ -4,10 +4,6 @@ public class Concert extends Event{
     private String artist;
     private String musicalGenre;
 
-    @Override
-    public void cancel() {
-        // .. 
-    }
 
     @Override
     public void displayDetails() {
