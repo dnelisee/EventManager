@@ -1,10 +1,5 @@
 package com.polytechnique.finaltppoo2.service;
 
-import com.polytechnique.finaltppoo2.model.Conference;
-
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-
 /*
  * This class implements the business logic related to Conference 
 */

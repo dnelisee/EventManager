@@ -1,6 +1,6 @@
 package com.polytechnique.finaltppoo2.dao;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -14,18 +14,16 @@ import com.polytechnique.finaltppoo2.model.Event;
 class EventSerializerTest {
     
     @Test
-    void testGetJsonResult() {
-        Conference conf1 = new Conference("1", "c1", LocalDateTime.now(), "loc1", 100, "theme1");
-        
-        Map<String, Event> events = new HashMap<>();
-        events.put(conf1.getId(), conf1); 
+    void testSerialize() {
+        Event conf1 = new Conference("1", "c1", LocalDateTime.now(), "loc1", 100, "theme1");
+         
+        String json = new EventSerializer().serialize(conf1); 
+        System.out.println(json);
 
-        String format = "{\"%s\":\"" + "%s:".repeat(7) + "\"}";
-
-        String expectedResult = String.format(format, conf1.getId(), conf1.getId(), conf1.getName(), conf1.getDate(), conf1.getLocation(), conf1.getMaxCapacity(), conf1.getState(), conf1.getTheme());
-    
-        EventSerializer eventSerializer = new EventSerializer(events); 
-
-        assertEquals(expectedResult, eventSerializer.getJsonResult());
+        assertTrue(json.contains("\"id\" : \"1\""));
+        assertTrue(json.contains("\"name\" : \"c1\""));
+        assertTrue(json.contains("\"location\" : \"loc1\""));
+        assertTrue(json.contains("\"maxCapacity\" : 100"));
     }
+
 }

@@ -2,7 +2,6 @@ package com.polytechnique.finaltppoo2.model;
 
 import java.time.LocalDateTime;
 
-import com.fasterxml.jackson.annotation.JsonValue;
 import com.polytechnique.finaltppoo2.model.exceptions.LengthException;
 import com.polytechnique.finaltppoo2.model.exceptions.ValidatableField;
 
@@ -11,7 +10,11 @@ public class Conference extends Event {
     /* attributes given by System class diagram */
     private String theme;
 
-    /* default constructor */
+    
+    public Conference() {
+    }
+
+    /* normal constructor */
     public Conference(String id, String name, LocalDateTime date, String location, int maxCapacity, String theme) {
 
         if (!ValidatableField.NAME.validate(name)) {
@@ -30,13 +33,6 @@ public class Conference extends Event {
             this.theme = theme;
         }
 
-    }
-
-    @Override
-    @JsonValue
-    public String toString() {
-        String format = "%s:".repeat(7);
-        return(String.format(format, id, name, date, location, maxCapacity, state, theme));
     }
 
     @Override
@@ -61,8 +57,5 @@ public class Conference extends Event {
 
     public String getTheme() {
         return theme;
-    }
-
-    public Conference() {
     }
 }
