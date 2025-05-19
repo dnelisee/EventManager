@@ -1,0 +1,9 @@
+{
+  "id" : "1",
+  "name" : "c1",
+  "date" : "2025-05-19T17:34:30.3707465",
+  "location" : "loc1",
+  "maxCapacity" : 100,
+  "state" : "PROGRAMMED",
+  "theme" : "theme1"
+}

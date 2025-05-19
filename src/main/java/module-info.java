@@ -11,4 +11,7 @@ module com.polytechnique.finaltppoo2 {
 
     opens com.polytechnique.finaltppoo2.model to com.fasterxml.jackson.databind, com.fasterxml.jackson.datatype.jsr310; 
     exports com.polytechnique.finaltppoo2.model;
+
+    opens com.polytechnique.finaltppoo2.dao to com.fasterxml.jackson.databind;
+
 }

@@ -2,18 +2,6 @@ package com.polytechnique.finaltppoo2.model;
 
 import java.time.LocalDateTime;
 
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-
-@JsonTypeInfo(
-    use = JsonTypeInfo.Id.NAME, 
-    include = JsonTypeInfo.As.PROPERTY, 
-    property = "type"
-)
-@JsonSubTypes({
-    @JsonSubTypes.Type(value = Conference.class, name = "conference"), 
-    @JsonSubTypes.Type(value = Concert.class, name = "concert")
-})
 public abstract class Event implements ObservableEvent{
 
     /* attributes given by System class diagram */
