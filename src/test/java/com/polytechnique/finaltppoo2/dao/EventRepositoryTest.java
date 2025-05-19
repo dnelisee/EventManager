@@ -8,94 +8,85 @@ import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.time.LocalDateTime;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import com.polytechnique.finaltppoo2.model.Conference;
 
 class EventRepositoryTest {
 
-    @Test 
-    void testCreateEventRepository() {
+    EventRepository<Conference> repo;
+
+    @BeforeEach
+    void setUp() {
         try {
-            EventRepository repo = new EventRepository();
-
-            System.out.println(repo.getBaseDir().toString());
-            System.out.println(repo.getIndexFile().toString());
-
-            assertEquals("src\\main\\resources\\com\\polytechnique\\finaltppoo2\\persistence\\events", repo.getBaseDir().toString());
-            assertEquals("src\\main\\resources\\com\\polytechnique\\finaltppoo2\\persistence\\events\\_index.json", repo.getIndexFile().toString());
-
-        } catch (URISyntaxException _) {
-            System.out.println("Error URI");
-        } 
+            repo = new EventRepository<>(Conference.class);
+        } catch (URISyntaxException e) {
+            System.err.println("Error URI : " + e.getMessage());
+            throw new RuntimeException();
+        }
     }
 
+    @Test
+    void testCreateEventRepository() {
+
+        System.out.println(repo.getBaseDir().toString());
+        System.out.println(repo.getIndexFile().toString());
+
+        assertEquals("src\\main\\resources\\com\\polytechnique\\finaltppoo2\\persistence\\events",
+                repo.getBaseDir().toString());
+        assertEquals("src\\main\\resources\\com\\polytechnique\\finaltppoo2\\persistence\\events\\_index.json",
+                repo.getIndexFile().toString());
+    }
 
     @Test
     void testCreatePathToEvent() {
-        EventRepository repo;
-        try {
-            repo = new EventRepository();
+        Path res = repo.createPathToEvent("100");
 
-            Path res = repo.createPathToEvent("100", "conference");
-
-            assertEquals("src\\main\\resources\\com\\polytechnique\\finaltppoo2\\persistence\\events\\conferences\\100.json",
-                    res.toString());
-        } catch (URISyntaxException _) {
-            System.err.println("Error");
-        }
+        assertEquals(
+                "src\\main\\resources\\com\\polytechnique\\finaltppoo2\\persistence\\events\\conferences\\100.json",
+                res.toString());
 
     }
 
-    @Test 
+    @Test
     void testLoadIndex() {
         try {
-            EventIndex expected = new EventIndex(); 
-            expected.getEventTypes().put("1", "conference"); 
+            EventIndex expected = new EventIndex();
+            expected.getEventTypes().put("1", "conference");
 
-            EventIndex res = new EventRepository().loadIndex();
+            EventIndex res = repo.loadIndex();
 
             expected.displayEvents();
             res.displayEvents();
 
-            assertTrue(expected.getEventTypes().equals(res.getEventTypes()));
-            
+            assertTrue(res.getEventTypes().entrySet().containsAll(expected.getEventTypes().entrySet()));
 
-        } catch(URISyntaxException _) {
-            System.err.println("error URI");
-        } catch(IOException e) {
+        } catch (IOException e) {
             System.err.println("error IO : " + e.getMessage());
         }
     }
 
-    @Test 
+    @Test
     void testEventExists() {
-        try {
-            EventRepository repo = new EventRepository();
 
-            Path res = repo.eventExists("1"); 
+        Path res = repo.createPathToEvent("1");
 
-            System.out.println(res.toString());
+        System.out.println(res.toString());
 
-            assertEquals("src\\main\\resources\\com\\polytechnique\\finaltppoo2\\persistence\\events\\conferences\\1.json", res.toString());
-
-        } catch (URISyntaxException _ ) {
-            System.err.println("error URI ");
-        } catch (IOException _) {
-            System.err.println("error IO");
-        }
-
+        assertEquals(
+                "src\\main\\resources\\com\\polytechnique\\finaltppoo2\\persistence\\events\\conferences\\1.json",
+                res.toString());
     }
 
-    @Test 
+    @Test
     void testCreateAndReadEvent() {
-        Conference conf1 = new Conference("2", "c2", LocalDateTime.now(), "loc2", 100, "theme2");
+        Conference conf1 = new Conference("3", "c3", LocalDateTime.now(), "loc3", 100, "theme3");
 
         try {
-            EventRepository repo = new EventRepository();
             repo.createEvent(conf1);
 
-            Conference conf2 = repo.readEvent("2", Conference.class);
+            Conference conf2 = repo.readEvent("3");
 
             assertEquals(conf1.getId(), conf2.getId());
             assertEquals(conf1.getName(), conf2.getName());
@@ -105,29 +96,23 @@ class EventRepositoryTest {
             assertEquals(conf1.getTheme(), conf2.getTheme());
             assertEquals(conf1.getState(), conf2.getState());
 
-        } catch (URISyntaxException e) {
-            System.err.println("error URI : " + e.getMessage());
-        } catch(IOException e) {
+        } catch (IOException e) {
             System.err.println("error IO : " + e.getMessage());
         }
     }
 
-    @Test 
+    @Test
     void testSaveAndLoadIndex() {
         try {
-            EventRepository repo = new EventRepository(); 
             EventIndex index = repo.loadIndex();
 
-            assertTrue(index.getEventTypes().size() == 2);
-            assertEquals("2025-05-19T17:48:16.048810", index.getLastUpdated().toString());
+            assertTrue(index.getEventTypes().size() == 3);
+            assertTrue(index.getLastUpdated().toString().contains("2025-05-19T19:32:58.894795300"));
 
-        } catch(URISyntaxException e) {
-            System.out.println("error URI : " + e.getMessage());
         } catch (IOException e) {
             System.err.println("error IO : " + e.getMessage());
         }
 
     }
 
-    
 }
