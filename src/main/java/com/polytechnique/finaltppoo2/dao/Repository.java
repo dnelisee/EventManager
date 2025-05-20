@@ -113,7 +113,7 @@ public class Repository<V extends PersisObject, T extends V> {
         try {
             Index index = loadIndex();
             for (Entry<String, String> entry : index.getPersisObjectTypes().entrySet()) {
-                if (entry.getKey() == persisObject.getId()) {
+                if (entry.getKey().equals(persisObject.getId())) {
                     index.getPersisObjectTypes().remove(entry.getKey());
                     return;
                 }
