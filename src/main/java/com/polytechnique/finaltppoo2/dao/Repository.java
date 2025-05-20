@@ -70,7 +70,7 @@ public class Repository<V extends PersisObject, T extends V> {
         try {
             index = loadIndex();
             for (Entry<String, String> entry : index.getPersisObjectTypes().entrySet()) {
-                if (entry.getKey() == persisObject.getId()) {
+                if (entry.getKey().equals(persisObject.getId())) {
                     return true;
                 }
             }
@@ -98,7 +98,7 @@ public class Repository<V extends PersisObject, T extends V> {
             index = loadIndex();
 
             for (Entry<String, String> entry : index.getPersisObjectTypes().entrySet()) {
-                if (entry.getValue() == persisObjectClass.getSimpleName().toLowerCase()) {
+                if (entry.getValue().equals(persisObjectClass.getSimpleName().toLowerCase())) {
                     result.add(readPersisObject(entry.getKey()));
                 }
             }

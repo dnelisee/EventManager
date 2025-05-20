@@ -11,7 +11,7 @@ public class Participant extends Person implements EventObserver {
     @Override
     public void update(String eventId, EventState newState) {
         for(Event event : events) {
-            if(event.getId() == eventId) {
+            if(event.getId().equals(eventId)) {
                 event.setState(newState);
             }
         }
