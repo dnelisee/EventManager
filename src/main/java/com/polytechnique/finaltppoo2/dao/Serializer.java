@@ -5,26 +5,25 @@ import java.nio.file.Path;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.polytechnique.finaltppoo2.model.Event;
 import com.polytechnique.finaltppoo2.dao.exceptions.SerializeException;
 import com.polytechnique.finaltppoo2.util.CustomObjectMapper;
 
-public class EventSerializer {
+public class Serializer<T> {
 
-    public void serializeToFile(Event event, Path file) throws IOException {
+    public void serializeToFile(T object, Path file) throws IOException {
         ObjectMapper mapper = CustomObjectMapper.get();
 
         try {
-            mapper.writeValue(file.toFile(), event);
+            mapper.writeValue(file.toFile(), object);
         } catch (JsonProcessingException e) {
             throw new SerializeException("serialize", e.getMessage());
         }
     }
 
-    public <T extends Event> T deserializeFromFile(Path file, Class<T> eventClass) throws IOException {
+    public T deserializeFromFile(Path file, Class<T> persisObjectClass) throws IOException {
         ObjectMapper mapper = CustomObjectMapper.get();
         try {
-            return (mapper.readValue(file.toFile(), eventClass));
+            return (mapper.readValue(file.toFile(), persisObjectClass));
         } catch (JsonProcessingException e) {
             throw new SerializeException("deserialize", e.getMessage());
         }

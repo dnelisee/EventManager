@@ -1,16 +1,23 @@
 package com.polytechnique.finaltppoo2.model;
 
+import java.util.List;
+
 public class Participant extends Person implements EventObserver {
 
-    /* attribute due to observer design pattern */
-    private EventState state;
-
-    @Override
-    public void update(EventState state) {
-        // ... 
+    public Participant(String id, String name, String email) {
+        super(id, name, email);
     }
 
-    public EventState getState() {
-        return state;
+    @Override
+    public void update(String eventId, EventState newState) {
+        for(Event event : events) {
+            if(event.getId() == eventId) {
+                event.setState(newState);
+            }
+        }
+    }
+
+    public List<Event> getparticipatedEvents() {
+        return events;
     }
 }

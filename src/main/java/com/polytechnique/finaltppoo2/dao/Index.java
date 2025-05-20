@@ -5,23 +5,25 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
-public class EventIndex {
-    private Map<String, String> eventTypes; // ID -> "conference" or "concert" ... 
+public class Index {
+    private Map<String, String> persisObjectTypes; // ID -> Object
 
     private LocalDateTime lastUpdated;
 
-    public EventIndex() {
-        eventTypes = new HashMap<>(); 
+    public Index() {
+        persisObjectTypes = new HashMap<>(); 
         lastUpdated = LocalDateTime.now(); 
     }
 
-    public void displayEvents() {
-        for(Entry<String, String> entry : eventTypes.entrySet())
+    public void display() {
+        for(Entry<String, String> entry : persisObjectTypes.entrySet())
             System.out.println(String.format("\"%s\" : \"%s\"",entry.getKey(), entry.getValue()));
+
+        System.out.println(lastUpdated.toString());
     }
 
-    public Map<String, String> getEventTypes() {
-        return eventTypes;
+    public Map<String, String> getPersisObjectTypes() {
+        return persisObjectTypes;
     }
 
     public LocalDateTime getLastUpdated() {

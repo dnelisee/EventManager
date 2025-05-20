@@ -16,7 +16,6 @@ public class Conference extends Event {
 
     /* normal constructor */
     public Conference(String id, String name, LocalDateTime date, String location, int maxCapacity, String theme) {
-
         if (!ValidatableField.NAME.validate(name)) {
             throw new LengthException(ValidatableField.NAME);
         } else if (!ValidatableField.LOCATION.validate(location)) {

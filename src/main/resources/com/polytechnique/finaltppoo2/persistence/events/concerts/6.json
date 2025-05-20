@@ -1,0 +1,10 @@
+{
+  "id" : "6",
+  "name" : "c6",
+  "date" : "2025-05-20T17:23:12.4405126",
+  "location" : "loc6",
+  "maxCapacity" : 50,
+  "state" : "PROGRAMMED",
+  "artist" : "malock",
+  "musicalGenre" : "bole"
+}

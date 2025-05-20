@@ -2,10 +2,9 @@ package com.polytechnique.finaltppoo2.model;
 
 import java.time.LocalDateTime;
 
-public abstract class Event implements ObservableEvent{
+public abstract class Event extends PersisObject implements ObservableEvent{
 
     /* attributes given by System class diagram */
-    protected String id;
     protected String name;
     protected LocalDateTime date;
     protected String location;
@@ -23,10 +22,6 @@ public abstract class Event implements ObservableEvent{
     }
 
     /* getters */
-    public String getId() {
-        return id;
-    }
-
     public String getName() {
         return name;
     }
@@ -45,6 +40,10 @@ public abstract class Event implements ObservableEvent{
 
     public EventState getState() {
         return state;
+    }
+
+    public void setState(EventState state) {
+        this.state = state;
     }
 
 }

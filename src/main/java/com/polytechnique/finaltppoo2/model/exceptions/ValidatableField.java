@@ -3,7 +3,10 @@ package com.polytechnique.finaltppoo2.model.exceptions;
 public enum ValidatableField {
     NAME("Name", 25),
     LOCATION("Location", 50),
-    THEME("Theme", 50);
+    THEME("Theme", 50),
+    ARTIST("Artist", 50), 
+    MUSICAL_GENRE("MusicalGenre", 50),
+    EMAIL("Email", 100);
 
     private final String fieldName;
     private final int maxLength;
