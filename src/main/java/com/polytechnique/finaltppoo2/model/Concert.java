@@ -1,6 +1,7 @@
 package com.polytechnique.finaltppoo2.model;
 
 import java.time.LocalDateTime;
+import java.util.Map;
 
 import com.polytechnique.finaltppoo2.model.exceptions.LengthException;
 import com.polytechnique.finaltppoo2.model.exceptions.ValidatableField;
@@ -58,5 +59,15 @@ public class Concert extends Event{
 
     public String getMusicalGenre() {
         return musicalGenre;
+    }
+
+    @Override
+    public Map<String, String> getAllAttributes() {
+        Map<String, String> list = super.getAllAttributes();
+
+        list.put("artist", artist);
+        list.put("musical genre", musicalGenre);
+
+        return list;
     }
 }

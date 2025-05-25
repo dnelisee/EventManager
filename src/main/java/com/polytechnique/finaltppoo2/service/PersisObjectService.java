@@ -1,12 +1,12 @@
 package com.polytechnique.finaltppoo2.service;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.polytechnique.finaltppoo2.dao.Repository;
 import com.polytechnique.finaltppoo2.model.PersisObject;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 
 /*
  * This class implements the business logic related to persisObject 
@@ -14,14 +14,15 @@ import javafx.collections.ObservableList;
 public class PersisObjectService<V extends PersisObject, T extends V> {
 
     private Repository<V, T> repo;
-    private ObservableList<T> list = FXCollections.observableArrayList();
+    private List<T> list;
 
     public PersisObjectService(Repository<V, T> repo) {
         this.repo = repo;
+        list = new ArrayList<>();
         list.addAll(repo.getPersisObjects());
     }
 
-    public ObservableList<T> getList() {
+    public List<T> getList() {
         return list;
     }
 

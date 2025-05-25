@@ -29,3 +29,4 @@ We consider here that a speaker in a conference is a participant.
 ### Dependencies
 - For data persistence : jakson
 
+

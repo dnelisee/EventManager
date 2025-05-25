@@ -20,4 +20,5 @@ public class Participant extends Person implements EventObserver {
     public List<Event> getparticipatedEvents() {
         return events;
     }
+
 }

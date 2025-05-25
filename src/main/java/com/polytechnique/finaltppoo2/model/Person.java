@@ -2,6 +2,7 @@ package com.polytechnique.finaltppoo2.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import com.polytechnique.finaltppoo2.model.exceptions.LengthException;
 import com.polytechnique.finaltppoo2.model.exceptions.ValidatableField;
@@ -34,5 +35,14 @@ public abstract class Person extends PersisObject{
         return email;
     } 
 
-    
+    @Override 
+    public Map<String, String> getAllAttributes() {
+        Map<String, String> map = super.getAllAttributes();
+
+        map.put("name", name); 
+        map.put("email", email);
+
+        return map;
+    }
+
 }

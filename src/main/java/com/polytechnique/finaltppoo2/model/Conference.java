@@ -1,6 +1,7 @@
 package com.polytechnique.finaltppoo2.model;
 
 import java.time.LocalDateTime;
+import java.util.Map;
 
 import com.polytechnique.finaltppoo2.model.exceptions.LengthException;
 import com.polytechnique.finaltppoo2.model.exceptions.ValidatableField;
@@ -56,5 +57,14 @@ public class Conference extends Event {
 
     public String getTheme() {
         return theme;
+    }
+
+    @Override
+    public Map<String, String> getAllAttributes() {
+       Map<String, String> map = super.getAllAttributes();
+
+        map.put("theme", theme);
+
+        return map;
     }
 }

@@ -1,41 +1,54 @@
 package com.polytechnique.finaltppoo2;
 
-import com.polytechnique.finaltppoo2.util.Database;
+import java.io.IOException;
+import java.net.URISyntaxException;
+
+import com.polytechnique.finaltppoo2.controller.EventsViewController;
+import com.polytechnique.finaltppoo2.view.EventsView;
+
 import javafx.application.Application;
-import javafx.application.Platform;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.SQLException;
-
 public class App extends Application {
+    private Stage stage; 
+    private Scene scene; 
+
     @Override
-    public void start(Stage primaryStage) throws IOException, SQLException {
+    public void start(Stage primaryStage) {
+        stage = primaryStage; 
+        
+        EventsView eventsView = new EventsView();
+        try {
+            new EventsViewController(eventsView);
+        } catch (URISyntaxException | IOException _) {
+            throw new RuntimeException("Error when creating an EventsViewController");
+        } 
 
-        // establish connection with the database
-        Connection dbConnection = Database.getConnection();
+        scene = new Scene(eventsView, 800, 600);
+        stage.setScene(scene);
+        setRoot(eventsView, "coreViewStyle.css");
 
+        stage.show();
+    }
 
-
-
-        // close the database connection after closing the primary stage
-        Platform.runLater(()->
-            primaryStage.setOnCloseRequest(_ -> { // _ is a unnamed variable; useful when we don't reused the variable as in this case
-                try {
-                    dbConnection.close();
-                } catch(SQLException _) {
-                    throw new RuntimeException("Failing to close the database Connection");
-                }
-            })
-        );
-
-
+    public void setRoot(Parent root, String styleFileName) {
+        scene.setRoot(root);
+        scene.getStylesheets().clear();
+        scene.getStylesheets().add(getClass().getResource("/com/polytechnique/finaltppoo2/styles/" + styleFileName).toExternalForm());
     }
 
     public static void main(String[] args) {
         launch();
-
-
     }
+
+    public Stage getStage() {
+        return stage;
+    }
+
+    public Scene getScene() {
+        return scene;
+    }
+    
 }
