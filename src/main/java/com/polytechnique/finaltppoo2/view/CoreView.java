@@ -17,9 +17,9 @@ import javafx.scene.text.Text;
 
 public abstract class CoreView extends HBox implements UsefulGraphicInterface {
     protected static final int LEFT_SIDE_SPACING = 5;
-    protected static final int LEFT_SIDE_WIDTH = 450;
+    protected static final int LEFT_SIDE_WIDTH = 300;
     protected static final int RIGHT_SIDE_WIDTH = 300;
-    protected static final int DEFAULT_SIDES_SPACING = 5;
+    protected static final int DEFAULT_SIDES_SPACING = 40;
     protected static final int TEXTFIELD_HEIGHT = 25;
 
     protected String elementName;
@@ -91,10 +91,10 @@ public abstract class CoreView extends HBox implements UsefulGraphicInterface {
     }
 
     protected void createSearchBar() {
-        HBox box = new HBox();
-        box.getStyleClass().add("search_bar");
-        box.setPrefWidth(TEXTFIELD_HEIGHT);
-        box.setSpacing(2);
+        HBox searchBarBox = new HBox();
+        searchBarBox.getStyleClass().add("search_bar");
+        searchBarBox.setPrefWidth(TEXTFIELD_HEIGHT);
+        searchBarBox.setSpacing(2);
 
         /* search icon */
         ImageView searchIcon = loadIcon("search.png");
@@ -103,12 +103,13 @@ public abstract class CoreView extends HBox implements UsefulGraphicInterface {
 
         /* search bar text field */
         searchBar = new TextField();
-        searchBar.setPromptText("Research " + elementName+ "...");
+        searchBar.setPrefWidth(RIGHT_SIDE_WIDTH - TEXTFIELD_HEIGHT);
+        searchBar.setPromptText("Research " + elementName + "...");
         searchBar.getStyleClass().add("search_text_field");
 
-        box.getChildren().addAll(searchIcon, searchBar);
+        searchBarBox.getChildren().addAll(searchIcon, searchBar);
 
-        leftSide.getChildren().add(box);
+        leftSide.getChildren().add(searchBarBox);
     }
 
     /**

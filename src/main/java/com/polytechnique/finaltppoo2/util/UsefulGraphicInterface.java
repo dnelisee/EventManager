@@ -28,6 +28,7 @@ public interface UsefulGraphicInterface {
 
 		button.setOnMouseEntered(_ -> button.setCursor(Cursor.HAND));
 		button.setOnMouseExited(_ -> button.setCursor(Cursor.DEFAULT));
+		
 		return button;
 	}
 }
