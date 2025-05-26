@@ -10,9 +10,9 @@ import com.polytechnique.finaltppoo2.util.CustomObjectMapper;
 
 public class Serializer<T> {
 
-    public void serializeToFile(T object, Path file) throws IOException {
-        ObjectMapper mapper = CustomObjectMapper.get();
+    private ObjectMapper mapper = CustomObjectMapper.get();
 
+    public void serializeToFile(T object, Path file) throws IOException {
         try {
             mapper.writeValue(file.toFile(), object);
         } catch (JsonProcessingException e) {
@@ -21,7 +21,6 @@ public class Serializer<T> {
     }
 
     public T deserializeFromFile(Path file, Class<T> persisObjectClass) throws IOException {
-        ObjectMapper mapper = CustomObjectMapper.get();
         try {
             return (mapper.readValue(file.toFile(), persisObjectClass));
         } catch (JsonProcessingException e) {

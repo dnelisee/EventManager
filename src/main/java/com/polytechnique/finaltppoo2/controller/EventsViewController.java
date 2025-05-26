@@ -15,48 +15,47 @@ import com.polytechnique.finaltppoo2.view.GraphicPersisObject;
 
 import javafx.scene.image.ImageView;
 
-
-public class EventsViewController extends CoreViewController{
-
-    private static final int HEADER_IMG_SIZE = 100;
+public class EventsViewController extends CoreViewController {
 
     private PersisObjectService<Event, Conference> confService;
     private PersisObjectService<Event, Concert> concService;
-    
-    public EventsViewController(EventsView view, PersisObjectService<Event, Conference> confService, PersisObjectService<Event, Concert> concService) {
+
+    public EventsViewController(EventsView view, PersisObjectService<Event, Conference> confService,
+            PersisObjectService<Event, Concert> concService) {
         super(view);
 
-        this.confService = confService; 
+        this.confService = confService;
         this.concService = concService;
 
-        /* load all events */
         loadElementsList();
-
-        /* set all handlers */
-        handleEventsListView();
 
     }
 
-    public EventsViewController(EventsView view) throws URISyntaxException, IOException{ 
-        this(view, new PersisObjectService<>(new Repository<>(Event.class, Conference.class)), new PersisObjectService<>(new Repository<>(Event.class, Concert.class)));
+    public EventsViewController(EventsView view) throws URISyntaxException, IOException {
+        this(view, new PersisObjectService<>(new Repository<>(Event.class, Conference.class)),
+                new PersisObjectService<>(new Repository<>(Event.class, Concert.class)));
     }
 
     @Override
     protected void loadElementsList() {
-        for(Conference conf : confService.getList()) {
-            view.getElementsListView().getItems().add(new GraphicPersisObject(conf, conf.getName(), conf.getDate().toString()));
+        for (Conference conf : confService.getList()) {
+            view.getElementsListView().getItems()
+                    .add(new GraphicPersisObject(conf, conf.getName(), conf.getDate().toString()));
         }
-        for(Concert conc : concService.getList()) {
-            view.getElementsListView().getItems().add(new GraphicPersisObject(conc, conc.getName(), conc.getDate().toString()));
+        for (Concert conc : concService.getList()) {
+            view.getElementsListView().getItems()
+                    .add(new GraphicPersisObject(conc, conc.getName(), conc.getDate().toString()));
         }
     }
 
-    private void handleEventsListView() {
+    @Override
+    protected void handleListView() {
 
         view.getElementsListView().setOnMouseClicked(_ -> {
             /* get the graphic object which is selected */
             GraphicPersisObject graphicObj = view.getElementsListView().getSelectionModel().getSelectedItem();
 
+            if(graphicObj == null) return;
 
             /* create the header of the right side view */
             String imageName = graphicObj.getPersisObj() instanceof Conference ? "conference.jpg" : "concert.jpg";
@@ -70,10 +69,10 @@ public class EventsViewController extends CoreViewController{
 
             view.getRightSide().getChildren().add(eventImageView);
 
-            if(graphicObj.getPersisObj() instanceof Conference) 
-                view.getRightSide().getChildren().add(new ConferenceInfosView((Conference)graphicObj.getPersisObj()));
-            else if(graphicObj.getPersisObj() instanceof Concert) 
-                view.getRightSide().getChildren().add(new ConcertInfosView((Concert)graphicObj.getPersisObj()));
+            if (graphicObj.getPersisObj() instanceof Conference)
+                view.getRightSide().getChildren().add(new ConferenceInfosView((Conference) graphicObj.getPersisObj()));
+            else if (graphicObj.getPersisObj() instanceof Concert)
+                view.getRightSide().getChildren().add(new ConcertInfosView((Concert) graphicObj.getPersisObj()));
 
         });
     }

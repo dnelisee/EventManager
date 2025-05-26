@@ -1,12 +1,15 @@
 package com.polytechnique.finaltppoo2.view;
 
+import com.polytechnique.finaltppoo2.App;
 import com.polytechnique.finaltppoo2.util.UsefulGraphicInterface;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -22,16 +25,25 @@ public abstract class CoreView extends HBox implements UsefulGraphicInterface {
     protected static final int DEFAULT_SIDES_SPACING = 40;
     protected static final int TEXTFIELD_HEIGHT = 25;
 
+    protected App app; 
     protected String elementName;
 
     protected VBox leftSide;
     protected VBox rightSide;
     protected Button threePoints;
+    protected ContextMenu threePtsCtxMenu;
+    protected MenuItem createElmtMenu; 
+    protected MenuItem eventsMenu;
+    protected MenuItem organizersMenu;
+    protected MenuItem participantsMenu; 
     protected TextField searchBar;
     protected ListView<GraphicPersisObject> elementsListView;
 
-    protected CoreView(int sidesSpacing, String elementName) {
+    protected CoreView(App app, int sidesSpacing, String elementName) {
         super(sidesSpacing);
+
+        this.app = app; 
+
         this.elementName = elementName;
         createLeftSide();
         createRightSide();
@@ -39,8 +51,8 @@ public abstract class CoreView extends HBox implements UsefulGraphicInterface {
         this.getChildren().addAll(leftSide, rightSide);
     }
 
-    protected CoreView(String elementName) {
-        this(DEFAULT_SIDES_SPACING, elementName);
+    protected CoreView(App app, String elementName) {
+        this(app, DEFAULT_SIDES_SPACING, elementName);
     }
 
     /**
@@ -77,6 +89,8 @@ public abstract class CoreView extends HBox implements UsefulGraphicInterface {
         /* create the three points */
         threePoints = createIconButton("menu-burger.png", 20);
 
+        createThreePtsCtxMenu();
+
         /* region to force appName and threePoints to be at the ens of line */
         Region spacer = new Region();
         HBox.setHgrow(spacer, Priority.ALWAYS);
@@ -88,6 +102,21 @@ public abstract class CoreView extends HBox implements UsefulGraphicInterface {
 
         leftSide.getChildren().add(line);
 
+    }
+
+    protected void createThreePtsCtxMenu() {
+        threePtsCtxMenu = new ContextMenu(); 
+
+        createElmtMenu = new MenuItem("create " + elementName); 
+        eventsMenu = new MenuItem("Events"); 
+        organizersMenu = new MenuItem("Organizers");
+        participantsMenu = new MenuItem("Participants"); 
+
+        threePtsCtxMenu.getItems().addAll(createElmtMenu, eventsMenu, organizersMenu, participantsMenu); 
+        
+        /* the controller should add the context menu to the three points 
+         * on click. 
+        */
     }
 
     protected void createSearchBar() {
@@ -142,5 +171,39 @@ public abstract class CoreView extends HBox implements UsefulGraphicInterface {
     public VBox getRightSide() {
         return rightSide;
     }
+
+    public String getElementName() {
+        return elementName;
+    }
+
+    public VBox getLeftSide() {
+        return leftSide;
+    }
+
+    public ContextMenu getThreePtsCtxMenu() {
+        return threePtsCtxMenu;
+    }
+
+    public MenuItem getCreateElmtMenu() {
+        return createElmtMenu;
+    }
+
+    public MenuItem getOrganizersMenu() {
+        return organizersMenu;
+    }
+
+    public MenuItem getParticipantsMenu() {
+        return participantsMenu;
+    }
+    
+    public MenuItem getEventsMenu() {
+        return eventsMenu;
+    }
+
+    public App getApp() {
+        return app;
+    }
+
+    
 
 }

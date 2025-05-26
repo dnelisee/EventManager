@@ -1,125 +1,65 @@
 package com.polytechnique.finaltppoo2.view;
 
-import javafx.geometry.HPos;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Priority;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-
 
 import com.polytechnique.finaltppoo2.model.Event;
 import com.polytechnique.finaltppoo2.util.ManageLocalDateTime;
 
-public abstract class EventInfosView extends GridPane implements ManageLocalDateTime{
-    protected static final int PADDING = 40;
-    protected static final int HGAP = 7;
-    protected static final int VGAP = 15;
-    protected static final int COL_1_WIDTH = 75;
-    protected static final int COL_2_WIDTH = 250;
-    protected static final int TEXT_FIELD_HEIGHT = 40;
+public abstract class EventInfosView extends PersisObjInfosView implements ManageLocalDateTime {
 
-    protected TextField nameField;
     protected TextField dateField;
     protected TextField locationField;
     protected TextField maxCapacityField;
 
-    protected Button modifyBtn; 
-    protected Button saveBtn;
-    
     protected EventInfosView(Event event) {
+        super(event);
+    }
 
-        // position of the grid pane 
-        this.setAlignment(Pos.CENTER);
+    @Override
+    protected int addOtherFields() {
+        startRow = addDateField();
+        startRow = addLocationField();
+        startRow = addMaxCapacityField();
 
-        // padding
-        this.setPadding(new Insets(PADDING, PADDING, PADDING, PADDING));
+        return startRow;
 
-        // horizontal and vertical gap
-        this.setHgap(HGAP);
-        this.setVgap(VGAP);
+    }
 
-        // column 1 constraints
-        ColumnConstraints col1Constraints = new ColumnConstraints(COL_1_WIDTH, COL_1_WIDTH, Double.MAX_VALUE);
-        col1Constraints.setHgrow(Priority.ALWAYS);
-
-        // column 2 constraints
-        ColumnConstraints col2Constraints = new ColumnConstraints(COL_2_WIDTH, COL_2_WIDTH, Double.MAX_VALUE);
-        col2Constraints.setHgrow(Priority.ALWAYS);
-
-        this.getColumnConstraints().addAll(col1Constraints, col2Constraints);
-
-        // header label
-        Label headerLabel = new Label(event.getClass().getSimpleName());
-        headerLabel.setFont(Font.font(Font.getDefault().getName(), FontWeight.BOLD, 16));
-        this.add(headerLabel, 0, 0, 2, 1);
-        GridPane.setHalignment(headerLabel, HPos.CENTER);
-        GridPane.setMargin(headerLabel, new Insets(10, 0, 10, 0));
-
-        // Name
-        Label nameLabel = new Label("Name");
-        this.add(nameLabel, 0, 1);
-
-        nameField = new TextField(event.getName());
-        nameField.setPrefWidth(TEXT_FIELD_HEIGHT);
-        nameField.setEditable(false);
-        this.add(nameField, 1, 1);
-
-        // date
+    private int addDateField() {
         Label dateLabel = new Label("Date");
-        this.add(dateLabel, 0, 2);
+        this.add(dateLabel, 0, startRow);
 
-        dateField = new TextField(lDtToString(event.getDate()));
+        dateField = new TextField(lDtToString(((Event) obj).getDate()));
         dateField.setEditable(false);
         dateField.setPrefWidth(TEXT_FIELD_HEIGHT);
-        this.add(dateField, 1, 2);
+        this.add(dateField, 1, startRow);
 
-        // location
+        return startRow + 1;
+    }
+
+    private int addLocationField() {
         Label locationLabel = new Label("Location");
-        this.add(locationLabel, 0, 3);
+        this.add(locationLabel, 0, startRow);
 
-        locationField = new TextField(event.getLocation());
+        locationField = new TextField(((Event) obj).getLocation());
         locationField.setEditable(false);
         locationField.setPrefHeight(TEXT_FIELD_HEIGHT);
-        this.add(locationField, 1, 3);
+        this.add(locationField, 1, startRow);
 
-        // maxCapacity
+        return startRow + 1;
+    }
+
+    private int addMaxCapacityField() {
         Label maxCapacityLabel = new Label("Max capacity");
-        this.add(maxCapacityLabel, 0, 4);
+        this.add(maxCapacityLabel, 0, startRow);
 
-        maxCapacityField = new TextField(String.valueOf(event.getMaxCapacity()));
+        maxCapacityField = new TextField(String.valueOf(((Event) obj).getMaxCapacity()));
         maxCapacityField.setEditable(false);
         maxCapacityField.setPrefHeight(TEXT_FIELD_HEIGHT);
-        this.add(maxCapacityField, 1, 4);
+        this.add(maxCapacityField, 1, startRow);
 
-        // others attributes
-        int startRow = addOtherFields(event, 5);
-
-        // buttons
-        modifyBtn = new Button("Modify");
-        this.add(modifyBtn, 0, startRow);
-
-        saveBtn = new Button("Save");
-        this.add(saveBtn, 1, startRow);
-        GridPane.setHalignment(saveBtn, HPos.RIGHT);
-
-    }
-
-    protected abstract int addOtherFields(Event event, int startRow); 
-
-
-    /* getters */
-    public Button getModifyBtn() {
-        return modifyBtn;
-    }
-
-    public Button getSaveBtn() {
-        return saveBtn;
+        return startRow + 1;
     }
 
 }

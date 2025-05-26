@@ -2,7 +2,6 @@ package com.polytechnique.finaltppoo2.model;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import com.polytechnique.finaltppoo2.model.exceptions.LengthException;
 import com.polytechnique.finaltppoo2.model.exceptions.ValidatableField;
 
@@ -12,7 +11,14 @@ public abstract class Person extends PersisObject{
     
     protected String email;
     
-    protected List<Event> events; 
+    protected List<Event> events = new ArrayList<>(); 
+
+    /**
+     * for (de)serialization process
+     */
+    protected Person() {
+
+    }
 
     protected Person(String id, String name, String email) {
         if (!ValidatableField.NAME.validate(name)) {

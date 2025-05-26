@@ -10,16 +10,26 @@ import javafx.util.Duration;
 
 public abstract class CoreViewController {
     private static final int RESEARCH_REFRESH_DELAY = 300; // milliseconds
+    protected static final int HEADER_IMG_SIZE = 100;
 
     protected CoreView view;
 
     protected CoreViewController(CoreView coreView) {
         this.view = coreView;
 
+        handleListView();
+
         handleSearchBar();
+
+        setThreePtsCtxMenu();
+
+        handleEventsMenu(); 
+        handleOrganizersMenu(); 
+        handleParticipantsMenu(); 
     }
 
     protected abstract void loadElementsList();
+    protected abstract void handleListView(); 
 
     protected void handleSearchBar() {
         /* get the current list */
@@ -64,7 +74,24 @@ public abstract class CoreViewController {
         });
     }
 
-    protected void handleThreePoints() {
-        // .. 
+    protected void setThreePtsCtxMenu() {
+        this.view.getThreePoints().setOnAction(_ -> 
+            this.view.getThreePtsCtxMenu().show(
+                    this.view.getThreePoints(),
+                    this.view.getThreePoints().localToScreen(this.view.getThreePoints().getBoundsInLocal()).getMinX(),
+                    this.view.getThreePoints().localToScreen(this.view.getThreePoints().getBoundsInLocal()).getMaxY())
+        );
+    }
+
+    private void handleEventsMenu() {
+        this.view.getEventsMenu().setOnAction(_-> this.view.getApp().gotoEventsView());
+    }
+
+    private void handleOrganizersMenu() {
+        this.view.getOrganizersMenu().setOnAction(_-> this.view.getApp().gotoOrganizersView());
+    }
+
+    private void handleParticipantsMenu() {
+        this.view.getParticipantsMenu().setOnAction(_-> this.view.getApp().gotoParticipantsView());
     }
 }
