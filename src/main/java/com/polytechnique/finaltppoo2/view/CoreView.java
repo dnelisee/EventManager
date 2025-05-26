@@ -132,7 +132,7 @@ public abstract class CoreView extends HBox implements UsefulGraphicInterface {
 
         /* search bar text field */
         searchBar = new TextField();
-        searchBar.setPrefWidth(RIGHT_SIDE_WIDTH - TEXTFIELD_HEIGHT);
+        searchBar.setPrefWidth((double)RIGHT_SIDE_WIDTH - TEXTFIELD_HEIGHT);
         searchBar.setPromptText("Research " + elementName + "...");
         searchBar.getStyleClass().add("search_text_field");
 
